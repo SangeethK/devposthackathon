@@ -15,9 +15,14 @@
 
 // How to load in modules
 const Scene = require('Scene');
+const FaceTracking = require('FaceTracking');
 
 // Use export keyword to make a symbol available in scripting debug console
 export const Diagnostics = require('Diagnostics');
+
+const myPlane = Scene.root.findAll('planeTracker0', {recursive: true});
+// Bind the user's face rotation in the Y-axis to the X-position of our plane.
+//myPlane[0].transform.x = FaceTracking.face(0).cameraTransform.rotationY;
 
 // To use variables and functions across files, use export/import keyword
 // export const animationDuration = 10;
