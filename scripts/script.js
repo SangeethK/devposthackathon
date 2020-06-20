@@ -16,25 +16,35 @@
 // How to load in modules
 const Scene = require('Scene');
 const FaceTracking = require('FaceTracking');
+const Animation = require('Animation');
+const TouchGestures = require('TouchGestures')
+const NativeUI = require('NativeUI')
 
-// Use export keyword to make a symbol available in scripting debug console
-export const Diagnostics = require('Diagnostics');
+Scene.root.findFirst('Heart', {recursive: true}).then(function(base){
+    const baseDriverParameters = {
+        durationMilliseconds: 400, 
+        loopCount: Infinity, 
+        mirror: true
+    }
+    
+    const baseDriver = Animation.timeDriver(baseDriverParameters);
+    baseDriver.start();
 
-const myPlane = Scene.root.findAll('planeTracker0', {recursive: true});
-// Bind the user's face rotation in the Y-axis to the X-position of our plane.
-//myPlane[0].transform.x = FaceTracking.face(0).cameraTransform.rotationY;
+    const baseSampler = Animation.samplers.easeInQuint(5.0, 6.0)
 
-// To use variables and functions across files, use export/import keyword
-// export const animationDuration = 10;
+    const baseAnimation = Animation.animate(baseDriver, baseSampler)
 
-// Use import keyword to import a symbol from another file
-// import { animationDuration } from './script.js'
+    const baseTransform = base.transform;
 
-// To access scene objects
-// const directionalLight = Scene.root.find('directionalLight0');
+    baseTransform.scaleX = baseAnimation; 
+    baseTransform.scaleY = baseAnimation;
+    baseTransform.scaleZ = baseAnimation;
+})
 
-// To access class properties
-// const directionalLightIntensity = directionalLight.intensity;
+Scene.root.findFirst('2dText0', {recursive: true}).then(function(base){
+    TouchGestures.onTap(base).subscribe(function() {
+        NativeUI.enterTextEditMode(base);
+    });      
+})
 
-// To log messages to the console
-// Diagnostics.log('Console message logged from the script.');
+
