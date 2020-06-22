@@ -28,6 +28,13 @@ Promise.all([
     Textures.findFirst('icon_1'),
     Textures.findFirst('icon_2'),
     Textures.findFirst('icon_3'),
+
+    Scene.root.findFirst('Heart'),
+    Scene.root.findFirst('emitter0'),
+    Scene.root.findFirst('BabylonShaderBall_Simple'),
+    Scene.root.findFirst('emitter1'),
+    Scene.root.findFirst('node-0'),
+    Scene.root.findFirst('emitter2'),
 ]).then(onReady);
 
 // Log a string message  
@@ -37,10 +44,16 @@ function onReady(assets) {
     const texture0 = assets[0];
     const texture1 = assets[1];
     const texture2 = assets[2];
-    const picker = NativeUI.picker;
 
+    const heart = assets[3];
+    const heartEmitter = assets[4]
+    const shaderBall = assets[5];
+    const shaderBallEmitter = assets[6]
+    const picker = NativeUI.picker;
+    const rose = assets[7];
+    const emitter2 = assets[8];
     const index = 0;
-    const selection = 0;
+    const selection = 1;
 
     const configuration = {
 
@@ -56,8 +69,38 @@ function onReady(assets) {
     picker.configure(configuration);
     picker.visible = true;
 
+    
+
     picker.selectedIndex.monitor().subscribe(function(index) {
-      Patches.inputs.setScalar('selection', index.newValue);
+        
+        // Loading the cubes
+        switch(index.newValue) {
+            case 0: {
+                shaderBall.hidden = false;
+                shaderBallEmitter.hidden = false;
+               heart.hidden = true;
+               heartEmitter.hidden = true;
+               break;
+            }
+            case 1: {
+                heart.hidden = false;
+                heartEmitter.hidden = false;
+                shaderBall.hidden = true;
+                shaderBallEmitter.hidden = true;
+                rose.hidden = true;
+               emitter2.hidden = true;
+               break;
+            }
+            case 2: {
+                shaderBall.hidden = true;
+                shaderBallEmitter.hidden = true;
+               rose.hidden = false;
+               emitter2.hidden = false;
+                heart.hidden = true;
+                heartEmitter.hidden = true;
+                break;
+            }
+          }
     });
 }
 
