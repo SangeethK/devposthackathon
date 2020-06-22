@@ -33,7 +33,7 @@ Promise.all([
     Scene.root.findFirst('emitter0'),
     Scene.root.findFirst('BabylonShaderBall_Simple'),
     Scene.root.findFirst('emitter1'),
-    Scene.root.findFirst('node-0'),
+    Scene.root.findFirst('Rose_01'),
     Scene.root.findFirst('emitter2'),
 ]).then(onReady);
 
@@ -69,40 +69,65 @@ function onReady(assets) {
     picker.configure(configuration);
     picker.visible = true;
 
-    
+    heartEmitter.hidden = true;
+    shaderBallEmitter.hidden = true;
+    emitter2.hidden = true;
 
     picker.selectedIndex.monitor().subscribe(function(index) {
         
         // Loading the cubes
         switch(index.newValue) {
             case 0: {
-                shaderBall.hidden = false;
-                shaderBallEmitter.hidden = false;
-               heart.hidden = true;
-               heartEmitter.hidden = true;
+                // shaderBall.hidden = false;
+                // shaderBallEmitter.hidden = false;
+                heart.hidden = true;
+                //heartEmitter.hidden = true;
+                rose.hidden = true;
+                //emitter2.hidden = true;
                break;
             }
             case 1: {
                 heart.hidden = false;
-                heartEmitter.hidden = false;
-                shaderBall.hidden = true;
-                shaderBallEmitter.hidden = true;
+                //heartEmitter.hidden = false;
+                // shaderBall.hidden = true;
+                // shaderBallEmitter.hidden = true;
                 rose.hidden = true;
-               emitter2.hidden = true;
+                //emitter2.hidden = true;
                break;
             }
             case 2: {
-                shaderBall.hidden = true;
-                shaderBallEmitter.hidden = true;
-               rose.hidden = false;
-               emitter2.hidden = false;
+                // shaderBall.hidden = true;
+                // shaderBallEmitter.hidden = true;
+                rose.hidden = false;
+                //emitter2.hidden = false;
                 heart.hidden = true;
-                heartEmitter.hidden = true;
+                //heartEmitter.hidden = true;
                 break;
             }
           }
     });
 }
+
+Scene.root.findFirst('Rose_01', {recursive: true}).then(function(base){
+    const baseDriverParameters = {
+        durationMilliseconds: 400, 
+        loopCount: Infinity, 
+        mirror: true
+    }
+    
+    const baseDriver = Animation.timeDriver(baseDriverParameters);
+    baseDriver.start();
+
+    const baseSampler = Animation.samplers.easeInQuint(0.2, 0.25)
+
+    const baseAnimation = Animation.animate(baseDriver, baseSampler)
+
+    const baseTransform = base.transform;
+
+    baseTransform.scaleX = baseAnimation; 
+    baseTransform.scaleY = baseAnimation;
+    baseTransform.scaleZ = baseAnimation;
+})
 
 Scene.root.findFirst('Heart', {recursive: true}).then(function(base){
     const baseDriverParameters = {
@@ -114,7 +139,7 @@ Scene.root.findFirst('Heart', {recursive: true}).then(function(base){
     const baseDriver = Animation.timeDriver(baseDriverParameters);
     baseDriver.start();
 
-    const baseSampler = Animation.samplers.easeInQuint(5.0, 6.0)
+    const baseSampler = Animation.samplers.easeInQuint(5.0, 7.0)
 
     const baseAnimation = Animation.animate(baseDriver, baseSampler)
 
@@ -135,7 +160,7 @@ Scene.root.findFirst('emitter0', {recursive: true}).then(function(base){
     const baseDriver = Animation.timeDriver(baseDriverParameters);
     baseDriver.start();
 
-    const baseSampler = Animation.samplers.easeInQuint(0.9, 1)
+    const baseSampler = Animation.samplers.easeInQuint(0.3, 0.4)
 
     const baseAnimation = Animation.animate(baseDriver, baseSampler)
 
