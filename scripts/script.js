@@ -35,6 +35,7 @@ Promise.all([
     Scene.root.findFirst('emitter1'),
     Scene.root.findFirst('Rose_01'),
     Scene.root.findFirst('emitter2'),
+    Scene.root.findFirst('ObjectReveal')
 ]).then(onReady);
 
 // Log a string message  
@@ -52,6 +53,7 @@ function onReady(assets) {
     const picker = NativeUI.picker;
     const rose = assets[7];
     const emitter2 = assets[8];
+    const ObjectReveal = assets[9];
     const index = 0;
     const selection = 1;
 
@@ -84,6 +86,7 @@ function onReady(assets) {
                 //heartEmitter.hidden = true;
                 rose.hidden = true;
                 //emitter2.hidden = true;
+            
                break;
             }
             case 1: {
@@ -118,15 +121,15 @@ Scene.root.findFirst('Rose_01', {recursive: true}).then(function(base){
     const baseDriver = Animation.timeDriver(baseDriverParameters);
     baseDriver.start();
 
-    const baseSampler = Animation.samplers.easeInQuint(0.2, 0.25)
+    const baseSampler = Animation.samplers.easeInQuint(0.4, 0.5)
 
     const baseAnimation = Animation.animate(baseDriver, baseSampler)
 
     const baseTransform = base.transform;
 
-    baseTransform.scaleX = baseAnimation; 
-    baseTransform.scaleY = baseAnimation;
-    baseTransform.scaleZ = baseAnimation;
+    baseTransform.scaleX = .3; 
+    baseTransform.scaleY = 0.3;
+    baseTransform.scaleZ = 0.3;
 })
 
 Scene.root.findFirst('Heart', {recursive: true}).then(function(base){
@@ -150,24 +153,7 @@ Scene.root.findFirst('Heart', {recursive: true}).then(function(base){
     baseTransform.scaleZ = baseAnimation;
 })
 
-Scene.root.findFirst('emitter0', {recursive: true}).then(function(base){
-    const baseDriverParameters = {
-        durationMilliseconds: 400, 
-        loopCount: Infinity, 
-        mirror: true
-    }
-    
-    const baseDriver = Animation.timeDriver(baseDriverParameters);
-    baseDriver.start();
-
-    const baseSampler = Animation.samplers.easeInQuint(0.3, 0.4)
-
-    const baseAnimation = Animation.animate(baseDriver, baseSampler)
-
-    const baseTransform = base.transform;
-
-    baseTransform.scaleX = baseAnimation; 
-    baseTransform.scaleY = baseAnimation;
-    baseTransform.scaleZ = baseAnimation;
+Scene.root.findFirst('ObjectReveal', {recursive: true}).then(function(base){
+        base.start();
 })
 
